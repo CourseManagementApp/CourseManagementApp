@@ -2,6 +2,7 @@ import './App.css';
 import handleSubmit from './components/handlesubmit';
 import { useRef } from 'react';
 import Dashboard from './dashboard/Dashboard'
+import BasicTable from './dashboard/BasicTable';
 function App() {
   const dataRef = useRef()
  

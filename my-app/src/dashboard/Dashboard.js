@@ -21,7 +21,7 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
-
+import { BasicTable } from './BasicTable';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -163,7 +163,7 @@ function DashboardContent() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
+              {/* <Grid item xs={12} md={8} lg={9}>
                <Paper
                   sx={{
                     p: 2,
@@ -172,16 +172,17 @@ function DashboardContent() {
                     height: 240,
                   }}
                 >
+                  <BasicTable/>
                 </Paper> 
-              </Grid>
+              </Grid> */}
               {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}>
     
               </Grid>
               {/* Recent Orders */}
               <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
+                <Paper>
+                  <BasicTable />
                 </Paper>
               </Grid>
             </Grid>
