@@ -10,7 +10,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
-export const mainListItems = (
+export const SideBar = (
   <React.Fragment>
     <ListItemButton>
       <ListItemIcon>
@@ -28,7 +28,7 @@ export const mainListItems = (
   </React.Fragment>
 );
 
-export const secondaryListItems = (
+export const SideBarSecondary = (
   <React.Fragment>
 
   </React.Fragment>

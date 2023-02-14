@@ -17,20 +17,12 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
-import { BasicTable } from './BasicTable';
+import { SideBar, SideBarSecondary } from './main/Sidebar';
+import { BasicTable } from './main/BasicTable';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+ 
     </Typography>
   );
 }
@@ -142,9 +134,9 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+            {SideBar}
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            {SideBarSecondary}
           </List>
         </Drawer>
         <Box
@@ -194,6 +186,6 @@ function DashboardContent() {
   );
 }
 
-export default function Dashboard() {
+export default function Home() {
   return <DashboardContent />;
 }

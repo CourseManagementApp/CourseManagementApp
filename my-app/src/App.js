@@ -1,26 +1,24 @@
-import './App.css';
-import handleSubmit from './components/handlesubmit';
+import './styles/App.css'
+import handleSubmit from './firebase/handlesubmit';
 import { useRef } from 'react';
-import Dashboard from './dashboard/Dashboard'
-import BasicTable from './dashboard/BasicTable';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Home from './pages/Home';
+import Dashboard from './pages/dashborad-v2/Dashboard';
 function App() {
-  const dataRef = useRef()
  
-  const submithandler = (e) => {
-    e.preventDefault()
-    handleSubmit(dataRef.current.value)
-    dataRef.current.value = ""
-  }
+
  
   return (
-    <div className="App">
-{/*       <form onSubmit={submithandler}>
-        <input type= "text" ref={dataRef} />
-        <button type = "submit">Save</button>
-      </form> */}
-<Dashboard/>
-        </div>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="dashboard/*" element={<Dashboard />} /> 
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
+
  
 export default App;
