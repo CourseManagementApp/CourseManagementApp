@@ -42,30 +42,6 @@ const tableIcons = {
   };
 
 
-//  export default function BasicTable() {
-// const data = [
-//         { name: "John", surname: "12345678", birthYear: 1995 },
-//         { name: "Bill ", surname: "12345678", birthYear: 1994 },
-//       ];
-//       const columns = [
-//         { title: "Name", field: "name" },
-//         { title: "ID", field: "surname" },
-//         { title: "Birth Year", field: "birthYear", type: "numeric" },
-//       ];
-//       const mytheme =  createTheme({
-//       });
-
-	  
-
-//     return (
-//         <ThemeProvider theme={mytheme}>
-//         <MaterialTable title="Basic Table" columns={columns} data={data}/>
-//         </ThemeProvider>
-//       );
-
-
-// 	}
-
 
 const theme = createTheme({
     palette: {
@@ -77,7 +53,7 @@ const theme = createTheme({
       },
     },})
 
-export function BasicTable() {
+export function UserSelectedTable() {
 	const { useState } = React;
   
 	const [columns, setColumns] = useState([

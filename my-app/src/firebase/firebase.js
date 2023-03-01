@@ -18,4 +18,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const firestore = getFirestore(app)
+// const db = firebase.firestore()
+
+// const  boardRef = db.collection('boards')
+export const firebase = getFirestore(app)
+
+

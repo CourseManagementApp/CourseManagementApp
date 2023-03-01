@@ -18,14 +18,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { SideBar, SideBarSecondary } from './main/Sidebar';
-import { BasicTable } from './main/BasicTable';
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
- 
-    </Typography>
-  );
-}
+import { UserSelectedTable } from './main/UserSelectedTable';
+import { SelectAllRounded } from '@mui/icons-material';
 
 const drawerWidth = 240;
 
@@ -174,11 +168,10 @@ function DashboardContent() {
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper>
-                  <BasicTable />
+                  <UserSelectedTable />
                 </Paper>
               </Grid>
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
       </Box>
