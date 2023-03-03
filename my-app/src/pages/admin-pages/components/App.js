@@ -2,14 +2,14 @@ import React from "react";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
 // components
-import Layout from "./pages/admin-pages/components"
+import Layout from "./Layout";
 
 // pages
-import Error from "./pages/admin-pages/pages/error";
-import Login from "./pages/admin-pages/pages/login";
+import Error from "../pages/error";
+import Login from "../pages/login";
 
 // context
-import { useUserState } from "./pages/admin-pages/context/UserContext";
+import { useUserState } from "../context/UserContext";
 
 export default function App() {
   // global

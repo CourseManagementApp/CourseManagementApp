@@ -11,7 +11,7 @@ import MuiAppBar from '@mui/material/AppBar';
 import { Brightness4, Brightness7, Home, Menu } from '@mui/icons-material';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import SideList from './SideList';
+import SideList from './SideList';
 
 const drawerWidth = 240;
 
@@ -81,7 +81,7 @@ export default function Dashboard() {
               component="div"
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              Home Dashboard
             </Typography>
             <IconButton onClick={() => setDark(!dark)}>
               {dark ? <Brightness7 /> : <Brightness4 />}
