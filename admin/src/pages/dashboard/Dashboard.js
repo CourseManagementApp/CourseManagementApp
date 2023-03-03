@@ -56,22 +56,36 @@ export default function Dashboard(props) {
       size="medium"
       color="secondary"
     >
-        Latest Reports
+        Add
     </Button>} />
       <Grid container spacing={4}>
  
-      
-  
-       
-        <Grid item xs={12}>
+        
+      <Grid item xs={12}>
           <Widget
-            title="Support Requests"
+            title="Course 1"
             upperTitle
             noBodyPadding
             bodyClass={classes.tableWidget}
           >
             <Table data={mock.table} />
           </Widget>
+
+          
+        </Grid>
+  
+       
+        <Grid item xs={12}>
+          <Widget
+            title="Course 2"
+            upperTitle
+            noBodyPadding
+            bodyClass={classes.tableWidget}
+          >
+            <Table data={mock.table} />
+          </Widget>
+
+          
         </Grid>
       </Grid>
     </>

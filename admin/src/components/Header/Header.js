@@ -41,52 +41,21 @@ const messages = [
     id: 0,
     variant: "warning",
     name: "Jane Hew",
-    message: "Hey! How is it going?",
+    message: "Hey I would like to request to be an TA.",
     time: "9:32",
   },
-  {
-    id: 1,
-    variant: "success",
-    name: "Lloyd Brown",
-    message: "Check out my new Dashboard",
-    time: "9:18",
-  },
-  {
-    id: 2,
-    variant: "primary",
-    name: "Mark Winstein",
-    message: "I want rearrange the appointment",
-    time: "9:15",
-  },
-  {
-    id: 3,
-    variant: "secondary",
-    name: "Liana Dutti",
-    message: "Good news from sale department",
-    time: "9:09",
-  },
+  
 ];
 
 const notifications = [
-  { id: 0, color: "warning", message: "Check out this awesome ticket" },
+  { id: 0, color: "warning", message: "New Student Request" },
   {
     id: 1,
     color: "success",
     type: "info",
-    message: "What is the best way to get ...",
+    message: "New Student Request",
   },
-  {
-    id: 2,
-    color: "secondary",
-    type: "notification",
-    message: "This is just a simple notification",
-  },
-  {
-    id: 3,
-    color: "primary",
-    type: "e-commerce",
-    message: "12 new orders has arrived today",
-  },
+
 ];
 
 export default function Header(props) {
@@ -137,7 +106,7 @@ export default function Header(props) {
           )}
         </IconButton>
         <Typography variant="h6" weight="medium" className={classes.logotype}>
-          React Material Admin
+          ECE Admin
         </Typography>
         <div className={classes.grow} />
         <div
@@ -290,14 +259,7 @@ export default function Header(props) {
             <Typography variant="h4" weight="medium">
               John Smith
             </Typography>
-            <Typography
-              className={classes.profileMenuLink}
-              component="a"
-              color="primary"
-              href="https://flatlogic.com"
-            >
-              Flalogic.com
-            </Typography>
+           
           </div>
           <MenuItem
             className={classNames(

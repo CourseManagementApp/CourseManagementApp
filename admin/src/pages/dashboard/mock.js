@@ -101,31 +101,7 @@ const mock = {
       color: "success",
       content: "Report from LT Company"
     },
-    {
-      id: 2,
-      icon: "envelope",
-      color: "danger",
-      content: '4 <span className="fw-semi-bold">Private</span> Mails'
-    },
-    {
-      id: 3,
-      icon: "comment",
-      color: "success",
-      content: '3 <span className="fw-semi-bold">Comments</span> to your Post'
-    },
-    {
-      id: 4,
-      icon: "cog",
-      color: "light",
-      content: 'New <span className="fw-semi-bold">Version</span> of RNS app'
-    },
-    {
-      id: 5,
-      icon: "bell",
-      color: "info",
-      content:
-        '15 <span className="fw-semi-bold">Notifications</span> from Social Apps'
-    }
+   
   ],
   table: [
     {
