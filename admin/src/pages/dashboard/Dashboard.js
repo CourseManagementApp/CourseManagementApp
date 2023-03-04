@@ -33,6 +33,9 @@ import { Typography } from "../../components/Wrappers";
 import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
 import BigStat from "./components/BigStat/BigStat";
+import { Firestore, collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
+
 
 const mainChartData = getMainChartData();
 const PieChartData = [
@@ -46,6 +49,19 @@ export default function Dashboard(props) {
   var classes = useStyles();
   var theme = useTheme();
 
+
+
+  async function test() {
+    const querySnapshot = await getDocs(collection(db, "Fall-2022"));
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+    });
+    
+   }
+  
+
+
   // local
   var [mainChartState, setMainChartState] = useState("monthly");
 
@@ -55,7 +71,8 @@ export default function Dashboard(props) {
       variant="contained"
       size="medium"
       color="secondary"
-    >
+    onClick={test} 
+  >
         Add
     </Button>} />
       <Grid container spacing={4}>

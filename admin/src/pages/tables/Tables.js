@@ -47,14 +47,14 @@ export default function Tables() {
           <MUIDataTable
             title="Employee List"
             data={datatableData}
-            columns={["Name", "Company", "City", "State"]}
+            columns={["Name", "Course", "N/A", "N/A"]}
             options={{
               filterType: "checkbox",
             }}
           />
         </Grid>
         <Grid item xs={12}>
-          <Widget title="Material-UI Table" upperTitle noBodyPadding bodyClass={classes.tableOverflow}>
+          <Widget title="Course List" upperTitle noBodyPadding bodyClass={classes.tableOverflow}>
             <Table data={mock.table} />
           </Widget>
         </Grid>
