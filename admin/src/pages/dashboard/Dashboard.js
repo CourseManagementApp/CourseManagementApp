@@ -31,10 +31,11 @@ import Widget from "../../components/Widget";
 import PageTitle from "../../components/PageTitle";
 import { Typography } from "../../components/Wrappers";
 import Dot from "../../components/Sidebar/components/Dot";
-import Table from "./components/Table/Table";
+import Table from "./components/Table/CourseTable";
 import BigStat from "./components/BigStat/BigStat";
 import { Firestore, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
+import CreateTable from "./CreateTable";
 
 
 const mainChartData = getMainChartData();
@@ -73,8 +74,18 @@ export default function Dashboard(props) {
       color="secondary"
     onClick={test} 
   >
-        Add
-    </Button>} />
+        Add Course
+    </Button>
+  
+  } />
+  <Button
+      variant="contained"
+      size="medium"
+      color="third"
+    onClick={test} 
+  >
+        Refresh
+    </Button>
       <Grid container spacing={4}>
  
         
@@ -85,25 +96,13 @@ export default function Dashboard(props) {
             noBodyPadding
             bodyClass={classes.tableWidget}
           >
-            <Table data={mock.table} />
+            <Table data={mock.table}/>
           </Widget>
 
           
         </Grid>
-  
-       
-        <Grid item xs={12}>
-          <Widget
-            title="Course 2"
-            upperTitle
-            noBodyPadding
-            bodyClass={classes.tableWidget}
-          >
-            <Table data={mock.table} />
-          </Widget>
 
-          
-        </Grid>
+        
       </Grid>
     </>
   );

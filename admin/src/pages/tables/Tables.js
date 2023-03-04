@@ -6,31 +6,34 @@ import MUIDataTable from "mui-datatables";
 // components
 import PageTitle from "../../components/PageTitle";
 import Widget from "../../components/Widget";
-import Table from "../dashboard/components/Table/Table";
+import Table from "../dashboard/components/Table/CourseTable";
+import CreateTable from "../dashboard/CreateTable";
 
 // data
 import mock from "../dashboard/mock";
 
 const datatableData = [
-  ["Joe James", "Example Inc.", "Yonkers", "NY"],
-  ["John Walsh", "Example Inc.", "Hartford", "CT"],
-  ["Bob Herm", "Example Inc.", "Tampa", "FL"],
-  ["James Houston", "Example Inc.", "Dallas", "TX"],
-  ["Prabhakar Linwood", "Example Inc.", "Hartford", "CT"],
-  ["Kaui Ignace", "Example Inc.", "Yonkers", "NY"],
-  ["Esperanza Susanne", "Example Inc.", "Hartford", "CT"],
-  ["Christian Birgitte", "Example Inc.", "Tampa", "FL"],
-  ["Meral Elias", "Example Inc.", "Hartford", "CT"],
-  ["Deep Pau", "Example Inc.", "Yonkers", "NY"],
-  ["Sebastiana Hani", "Example Inc.", "Dallas", "TX"],
-  ["Marciano Oihana", "Example Inc.", "Yonkers", "NY"],
-  ["Brigid Ankur", "Example Inc.", "Dallas", "TX"],
-  ["Anna Siranush", "Example Inc.", "Yonkers", "NY"],
-  ["Avram Sylva", "Example Inc.", "Hartford", "CT"],
-  ["Serafima Babatunde", "Example Inc.", "Tampa", "FL"],
-  ["Gaston Festus", "Example Inc.", "Tampa", "FL"],
+  ["John", "CEN3031", "Junior", "Computer Science", "1234567"],
+  ["Sarah", "EGN3211", "Senior", "Mechanical Engineering", "2345678"],
+  ["David", "EGM2511", "Sophomore", "Mechanical Engineering", "3456789"],
+  ["Emily", "EGN3365", "Junior", "Civil Engineering", "4567890"],
+  ["Michael", "EEL3123", "Senior", "Electrical Engineering", "5678901"],
+  ["Sophia", "EML2023", "Freshman", "Materials Science and Engineering", "6789012"],
+  ["William", "CEN4072", "Junior", "Computer Science", "7890123"],
+  ["Olivia", "EGN3443C", "Senior", "Chemical Engineering", "8901234"],
+  ["Daniel", "EEL4914C", "Junior", "Computer Engineering", "9012345"],
+  ["Isabella", "EGM3401C", "Sophomore", "Mechanical Engineering", "0123456"],
+  ["Aiden", "CEN4211C", "Freshman", "Computer Science", "1234567"],
+  ["Mia", "EGN3613C", "Junior", "Civil Engineering", "2345678"],
+  ["Ethan", "EEL3744C", "Senior", "Electrical Engineering", "3456789"],
+  ["Charlotte", "EGN3615", "Junior", "Environmental Engineering", "4567890"],
+  ["Alexander", "EEL4855C", "Senior", "Computer Engineering", "5678901"],
+  ["Amelia", "EML4500", "Sophomore", "Materials Science and Engineering", "6789012"],
+  ["Benjamin", "CEN4213C", "Freshman", "Computer Science", "7890123"],
+  ["Abigail", "EGN4641C", "Senior", "Civil Engineering", "8901234"],
+  ["Lucas", "EGM3402C", "Junior", "Mechanical Engineering", "9012345"],
+  ["Emma", "EGN3614C", "Sophomore", "Environmental Engineering", "0123456"]
 ];
-
 const useStyles = makeStyles(theme => ({
   tableOverflow: {
     overflow: 'auto'
@@ -47,7 +50,7 @@ export default function Tables() {
           <MUIDataTable
             title="Employee List"
             data={datatableData}
-            columns={["Name", "Course", "N/A", "N/A"]}
+            columns={ ["Name", "Course", "Year", "Dept", "ID"]}
             options={{
               filterType: "checkbox",
             }}
@@ -55,7 +58,7 @@ export default function Tables() {
         </Grid>
         <Grid item xs={12}>
           <Widget title="Course List" upperTitle noBodyPadding bodyClass={classes.tableOverflow}>
-            <Table data={mock.table} />
+            <CreateTable/>
           </Widget>
         </Grid>
       </Grid>

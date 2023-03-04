@@ -10,6 +10,8 @@ import Login from "../pages/login";
 
 // context
 import { useUserState } from "../context/UserContext";
+import Index from "../pages/tables/FileDropAndConverter";
+import CreateTable from "../pages/dashboard/CreateTable";
 
 export default function App() {
   // global
@@ -29,6 +31,7 @@ export default function App() {
         <Route component={Error} />
       </Switch>
     </HashRouter>
+    // <CreateTable/>
   );
 
   // #######################################################################
