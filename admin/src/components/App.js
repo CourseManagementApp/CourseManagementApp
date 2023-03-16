@@ -12,6 +12,9 @@ import Login from "../pages/login";
 import { useUserState } from "../context/UserContext";
 import Index from "../pages/tables/FileDropAndConverter";
 import CreateTable from "../pages/dashboard/CreateTable";
+import CSVReader from "../pages/tables/FileDropAndConverter";
+import GroupOfCards from "../pages/dashboard/databaseList";
+import UserTable from "../pages/advancedForm";
 
 export default function App() {
   // global
@@ -31,7 +34,6 @@ export default function App() {
         <Route component={Error} />
       </Switch>
     </HashRouter>
-    // <CreateTable/>
   );
 
   // #######################################################################

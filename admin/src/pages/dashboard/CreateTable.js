@@ -29,12 +29,13 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
 import { createTheme } from '@material-ui/core/styles';
+import UserList from "./components/UserRequest";
 
 export default function CreateTable() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
-  const empCollectionRef = collection(db, "Fall-2022");
+  const empCollectionRef = collection(db, "fall_2022_ECE");
 
   useEffect(() => {
     getUsers();
@@ -73,7 +74,7 @@ export default function CreateTable() {
   };
 
   const deleteApi = async (id) => {
-    const userDoc = doc(db, "products", id);
+    const userDoc = doc(db, "fall_2022_ECE", id);
     await deleteDoc(userDoc);
     Swal.fire("Deleted!", "Your file has been deleted.", "success");
     getUsers();
@@ -103,7 +104,7 @@ export default function CreateTable() {
               onChange={(e, v) => filterData(v)}
               getOptionLabel={(rows) => rows.name || ""}
               renderInput={(params) => (
-                <TextField {...params} size="small" label="Search Products" />
+                <TextField {...params} size="small" label="Search Courses" />
               )}
             />
             <Typography
@@ -152,9 +153,9 @@ export default function CreateTable() {
                         key={row.code}
                       >
                         <TableCell align="left">{row.Course}</TableCell>
-                        <TableCell align="left">{row.price}</TableCell>
-                        <TableCell align="left">{row.category}</TableCell>
-                        <TableCell align="left">{row.date}</TableCell>
+                        <TableCell align="left">{row.Course}</TableCell>
+                        <TableCell align="left">{row.Days}</TableCell>
+                        <TableCell align="left">{row.Instructor}</TableCell>
                         <TableCell align="left">
                           <Stack spacing={2} direction="row">
                             <EditIcon

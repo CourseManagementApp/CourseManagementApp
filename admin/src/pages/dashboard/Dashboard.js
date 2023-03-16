@@ -36,7 +36,10 @@ import BigStat from "./components/BigStat/BigStat";
 import { Firestore, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import CreateTable from "./CreateTable";
-
+import GroupOfCards from "./databaseList";
+import UserList from "./components/UserRequest";
+import UserTable from "./components/UserRequest";
+import GroupOfCards from "./databaseList";
 
 const mainChartData = getMainChartData();
 const PieChartData = [
@@ -78,6 +81,8 @@ export default function Dashboard(props) {
     </Button>
   
   } />
+
+  <UserTable/>
   <Button
       variant="contained"
       size="medium"
@@ -88,16 +93,18 @@ export default function Dashboard(props) {
     </Button>
       <Grid container spacing={4}>
  
-        
       <Grid item xs={12}>
+        <GroupOfCards/>
+
           <Widget
-            title="Course 1"
+            title="User Requests"
             upperTitle
             noBodyPadding
             bodyClass={classes.tableWidget}
           >
-            <Table data={mock.table}/>
+        <UserList/>
           </Widget>
+          <GroupOfCards/>
 
           
         </Grid>
