@@ -39,7 +39,6 @@ import CreateTable from "./CreateTable";
 import GroupOfCards from "./databaseList";
 import UserList from "./components/UserRequest";
 import UserTable from "./components/UserRequest";
-import GroupOfCards from "./databaseList";
 
 const mainChartData = getMainChartData();
 const PieChartData = [
