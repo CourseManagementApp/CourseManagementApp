@@ -18,6 +18,7 @@ import GroupOfCards from "../pages/dashboard/databaseList";
 import UserTable from "../pages/advancedForm";
 import CourseTable from "../pages/advancedForm";
 import InstructorTable from "../pages/dashboard/components/Table/InstructorTable";
+import TestCourseTable from "../pages/dashboard/components/Table/test";
 
 export default function App() {
   // global
@@ -47,6 +48,7 @@ export default function App() {
 
       
   </HashRouter>
+  
 
   );
 

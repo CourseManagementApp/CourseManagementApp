@@ -1,50 +1,110 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Modal, Grid } from "@material-ui/core";
+import { db } from "../../../../firebase/firebase";
 import {
-  Table,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-  Chip
-} from "@material-ui/core";
-import useStyles from "../../styles";
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  setDoc,
+  getDoc,
+  doc,
+} from "firebase/firestore";
+import PopupTable from "./PopupTable";
+import Widget from "../../../../components/Widget/Widget";
+import DeleteIcon from "@mui/icons-material/Delete"
 
-const states = {
-  sent: "success",
-  pending: "warning",
-  declined: "secondary",
-};
 
-export default function TableComponent({ data }) {
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+});
+
+function CourseTable(props) {
+  const [open, setOpen] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const empCollectionRef = collection(db, "Courses");
+
+
+  useEffect(() => {
+    console.log(props.courseList);
+}, []);
+
+
+
   const classes = useStyles();
-  var keys = Object.keys(data[0]).map(i => i.toUpperCase());
-  keys.shift(); // delete "id" key
+
+
+  const handleButtonClick = (course) => {
+    setSelectedCourse(course);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
 
   return (
-    <Table className="mb-0">
-      <TableHead>
-        <TableRow>
-          {keys.map(key => (
-            <TableCell key={key}>{key}</TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {data.map(({ id, CourseTitle, Course, TA_Name, Instructor, Section, Time, RoomCap, status}) => (
-          <TableRow key={id}>
-            <TableCell className="pl-3 fw-normal">{CourseTitle}</TableCell>
-            <TableCell>{Course}</TableCell>
-            <TableCell>{TA_Name}</TableCell>
-            <TableCell>{Instructor}</TableCell>
-            <TableCell>{Section}</TableCell>
-            <TableCell>{Time}</TableCell>
-            <TableCell>{RoomCap}</TableCell>
-            <TableCell>
-              <Chip label={status} classes={{root: classes[states[status.toLowerCase()]]}}/>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="props table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Course Name</TableCell>
+              <TableCell align="right">Course Code</TableCell>
+              <TableCell align="right">Credits</TableCell>
+              <TableCell align="right">Button</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+
+          {props.courseList.map((course) => (
+              <TableRow key={course.id}>
+                <TableCell component="th" scope="row">
+                  {course.CourseName}
+                  {console.log(course)}
+                </TableCell>
+                <TableCell align="right">{course.CourseNumber}</TableCell>
+                <TableCell align="right">{course.Credits}</TableCell>
+                <TableCell align="right">
+                  <Button variant="contained" color="primary" onClick={() => handleButtonClick(course)}>
+                    Employee List
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        className={classes.modal}
+      >
+        <div className={classes.paper}>
+
+          <Widget title="Employee List" upperTitle >
+
+
+            <PopupTable />
+          </Widget>
+        </div>
+
+      </Modal>
+    </>
   );
 }
+
+export default CourseTable;

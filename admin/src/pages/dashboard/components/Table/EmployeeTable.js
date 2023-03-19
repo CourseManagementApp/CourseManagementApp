@@ -43,6 +43,7 @@ export default function EmployeeTable() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
   const empCollectionRef = collection(db, "Employees");
+  
 
   useEffect(() => {
     getUsers();
