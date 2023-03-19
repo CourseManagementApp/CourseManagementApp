@@ -36,6 +36,12 @@ import {
 } from "../../context/LayoutContext";
 import { useUserDispatch, signOut } from "../../context/UserContext";
 
+import dotenv from 'dotenv'
+dotenv.config()
+
+
+
+
 const messages = [
   {
     id: 0,
@@ -57,6 +63,9 @@ const notifications = [
   },
 
 ];
+
+
+const name = process.env.DB_USERNAME
 
 export default function Header(props) {
   var classes = useStyles();
@@ -257,7 +266,7 @@ export default function Header(props) {
         >
           <div className={classes.profileMenuUser}>
             <Typography variant="h4" weight="medium">
-              John Smith
+              {name}
             </Typography>
            
           </div>

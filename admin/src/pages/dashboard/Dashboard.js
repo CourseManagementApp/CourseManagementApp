@@ -52,6 +52,7 @@ import {
   setDoc,
   getDoc,
   doc,
+  query, collectionGroup, where
 } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import Swal from "sweetalert2";
@@ -70,6 +71,9 @@ const PieChartData = [
 ];
 
 
+const currentUserToken = "1234";
+
+
 
 
 export default function Dashboard(props) {
@@ -77,17 +81,34 @@ export default function Dashboard(props) {
   var theme = useTheme();
 
   useEffect(() => {
-    getCourseList();
+    getInstructorCourseList(currentUserToken);
+
   }, []);
 
 
   const empCollectionRef = collection(db, "Courses");
   const [courses, setCourses] = useState([]);
+  const [instructorUID, setInstructurUID] = useState(false); // to manage the dialog state
 
-  const  getCourseList = async () => {
-    const data = await getDocs(empCollectionRef);
+
+  const getInstructorCourseList = async (instructorUid) => {
+    const InstructorCollection = collection(db, "Instructor");
+    const q = query(InstructorCollection, where("uid", "==", instructorUid));
+  
+    const querySnapshot = await getDocs(q);
+    
+    console.log(querySnapshot.docs.at(0).id)
+    setInstructurUID(querySnapshot.docs.at(0).id)
+    const InstructorCourseCollection = collection(db, `Instructor/${querySnapshot.docs.at(0).id}/Courses`)
+    const data = await getDocs(InstructorCourseCollection);
+    data.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+    });    
     setCourses(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    console.log()
+
+ 
+    
   }
 
 
@@ -97,7 +118,6 @@ export default function Dashboard(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
-
   };
 
   const handleClose = () => {
@@ -105,9 +125,17 @@ export default function Dashboard(props) {
   };
   
   const handleAddCourse = async (course) => {
-    const newEmployeeRef = await addDoc(empCollectionRef, course);
+
+    const InstructorCollection = collection(db, "Instructor");
+    const q = query(InstructorCollection, where("uid", "==", currentUserToken));
+  
+    const querySnapshot = await getDocs(q);
     
-    getCourseList();
+    console.log(querySnapshot.docs.at(0).id)
+    const InstructorCourseCollection = collection(db, `Instructor/${querySnapshot.docs.at(0).id}/Courses`)
+    const newCourseAddRef = await addDoc(InstructorCourseCollection, course);
+
+    getInstructorCourseList();
     handleClose();
     Swal.fire("Success", "Course added successfully.", "success");
   };
@@ -118,7 +146,7 @@ export default function Dashboard(props) {
 function AddCourseDialog({ open, handleClose, handleSubmit }) {
   const [courseTitle, setCourseTitle] = useState("");
   const [courseNumber, setCourseNumber] = useState("");
-  const [instructor, setInstructor] = useState("");
+  const [Credits, setCredits] = useState("");
 
   const handleCourseNameChange = (event) => {
     setCourseTitle(event.target.value);
@@ -128,8 +156,8 @@ function AddCourseDialog({ open, handleClose, handleSubmit }) {
     setCourseNumber(event.target.value);
   };
 
-  const handleInstructorChange = (event) => {
-    setInstructor(event.target.value);
+  const handleCreditsChange = (event) => {
+    setCredits(event.target.value);
   };
 
   const handleSubmitClick = (event) => {
@@ -137,8 +165,9 @@ function AddCourseDialog({ open, handleClose, handleSubmit }) {
     handleSubmit({
       CourseName: courseTitle,
       CourseNumber: courseNumber,
-      Instructor: instructor,
+      Credits: Credits,
     });
+
     handleClose();
 
   };
@@ -170,12 +199,12 @@ function AddCourseDialog({ open, handleClose, handleSubmit }) {
 
           <TextField
             margin="dense"
-            label="Instructor"
+            label="Credits"
             type="text"
             fullWidth
             required
-            value={instructor}
-            onChange={handleInstructorChange}
+            value={Credits}
+            onChange={handleCreditsChange}
           />
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
@@ -186,7 +215,6 @@ function AddCourseDialog({ open, handleClose, handleSubmit }) {
     </Dialog>
   );
 }
-
 
 
 
@@ -220,7 +248,7 @@ function AddCourseDialog({ open, handleClose, handleSubmit }) {
       <Grid container spacing={4}>
         <Grid item xs={12}>
 
-          <CourseListTable courseList={courses} />
+          <CourseListTable courseList={courses} instructorUID={instructorUID}  />
         </Grid>
       </Grid>
 

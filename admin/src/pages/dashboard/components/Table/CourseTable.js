@@ -33,6 +33,8 @@ const useStyles = makeStyles({
 function CourseTable(props) {
   const [open, setOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [courseUID, setCourseUID] = useState(null);
+
   const empCollectionRef = collection(db, "Courses");
 
 
@@ -45,7 +47,9 @@ function CourseTable(props) {
   const classes = useStyles();
 
 
-  const handleButtonClick = (course) => {
+  const handleButtonClick =  (course) => {
+
+    setCourseUID(course.id)
     setSelectedCourse(course);
     setOpen(true);
   };
@@ -97,8 +101,8 @@ function CourseTable(props) {
 
           <Widget title="Employee List" upperTitle >
 
-
-            <PopupTable />
+            {console.log("test", props.instructorUID)}
+            <PopupTable courseUID={courseUID} instructorUID={props.instructorUID} />
           </Widget>
         </div>
 
