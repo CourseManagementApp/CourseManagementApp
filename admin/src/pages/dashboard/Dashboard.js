@@ -89,9 +89,9 @@ export default function Dashboard(props) {
   const empCollectionRef = collection(db, "Courses");
   const [courses, setCourses] = useState([]);
   const [instructorUID, setInstructurUID] = useState(false); // to manage the dialog state
+  const [courseID, setCourseID] = useState(false); // to manage the dialog state
 
-
-  const getInstructorCourseList = async (instructorUid) => {
+  const getInstructorCourseList = async (instructorUid = currentUserToken) => {
     const InstructorCollection = collection(db, "Instructor");
     const q = query(InstructorCollection, where("uid", "==", instructorUid));
   
@@ -105,11 +105,14 @@ export default function Dashboard(props) {
       // doc.data() is never undefined for query doc snapshots
       console.log(doc.id, " => ", doc.data());
     });    
+
+    
     setCourses(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
 
  
     
   }
+
 
 
 
@@ -123,6 +126,8 @@ export default function Dashboard(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  
   
   const handleAddCourse = async (course) => {
 
@@ -134,6 +139,12 @@ export default function Dashboard(props) {
     console.log(querySnapshot.docs.at(0).id)
     const InstructorCourseCollection = collection(db, `Instructor/${querySnapshot.docs.at(0).id}/Courses`)
     const newCourseAddRef = await addDoc(InstructorCourseCollection, course);
+    const addEmployeeCollection = collection(db, `${newCourseAddRef.path}/Employees`)
+    const initEmpCollection = await addDoc(addEmployeeCollection, {
+      EmployeeName: '',
+      CourseNumber: '',
+      Role: '',
+    });
 
     getInstructorCourseList();
     handleClose();
@@ -248,7 +259,7 @@ function AddCourseDialog({ open, handleClose, handleSubmit }) {
       <Grid container spacing={4}>
         <Grid item xs={12}>
 
-          <CourseListTable courseList={courses} instructorUID={instructorUID}  />
+          <CourseListTable courseList={courses} instructorUID={instructorUID}  getInstructorCourseList={getInstructorCourseList} />
         </Grid>
       </Grid>
 

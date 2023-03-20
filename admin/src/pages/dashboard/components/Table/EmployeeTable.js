@@ -23,6 +23,8 @@ import {
   setDoc,
   getDoc,
   doc,
+  where,
+  query
 } from "firebase/firestore";
 import {
   Dialog,
@@ -35,6 +37,7 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import Swal from "sweetalert2";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import HireEmployeeDialog from "./HireEmployeeDialog";
 
 import { createTheme } from '@material-ui/core/styles';
 
@@ -42,17 +45,44 @@ export default function EmployeeTable() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [instructorUID, setInstructurUID] = useState("");
+
   const empCollectionRef = collection(db, "Employees");
+
+  const currentUserToken = "1234"
+  const getInstructorCourseEmployeeList = async (instructorUid = currentUserToken) => {
+    const InstructorCollection = collection(db, "Instructor");
+    const q = query(InstructorCollection, where("uid", "==", instructorUid));
   
+    const querySnapshot = await getDocs(q);
+    
+    console.log(querySnapshot.docs.at(0).id)
+    setInstructurUID(querySnapshot.docs.at(0).id)
+    const InstructorCourseCollection = collection(db, `Instructor/${querySnapshot.docs.at(0).id}/Courses`)
+    const data = await getDocs(InstructorCourseCollection);
+    data.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+    });    
+    setCourses(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+
+ 
+    
+  }
+
 
   useEffect(() => {
     getUsers();
+    getInstructorCourseEmployeeList()
   }, []);
 
+
+ 
   const getUsers = async () => {
     const data = await getDocs(empCollectionRef);
     setRows(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id})));
+    console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
   const handleChangePage = (event, newPage) => {
@@ -94,21 +124,35 @@ export default function EmployeeTable() {
       getUsers();
     }
   };
-  
-  
+
+ 
 
   const handleAddEmployee = async (employee) => {
     const newEmployeeRef = await addDoc(empCollectionRef, employee);
-    
+
     handleClose();
     Swal.fire("Success", "Employee added successfully.", "success");
   };
 
   const [open, setOpen] = useState(false);
+  const [employeeDialogOpen, setEmployeeDialogOpen] = useState(false);
+
+
+
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+
+  const handleClickEmployeeOpen = () => {
+    setEmployeeDialogOpen(true)
+  }
+
+  
+  const handleClickEmployeeClose = () => {
+    setEmployeeDialogOpen(false)
+  }
 
   const handleClose = () => {
     setOpen(false);
@@ -119,36 +163,46 @@ export default function EmployeeTable() {
     const [role, setRole] = useState("");
     const [course, setCourse] = useState("");
     const [instructor, setInstructor] = useState("");
-  
+    const [UFID, setUFID] = useState("");
+
+
+    
+
     const handleNameChange = (event) => {
       setName(event.target.value);
     };
-  
+
     const handleRoleChange = (event) => {
       setRole(event.target.value);
     };
-  
+
     const handleCourseChange = (event) => {
       setCourse(event.target.value);
     };
-  
+
     const handleInstructorChange = (event) => {
       setInstructor(event.target.value);
     };
-  
+
+    const handleUFIDChange = (event) => {
+      setUFID(event.target.value);
+    };
+
     const handleSubmitClick = (event) => {
       event.preventDefault();
       handleSubmit({
         Name: name,
         Role: role,
         Course: course,
+        UFID: UFID,
+
         Instructor: instructor,
       });
       handleClose();
       getUsers();
 
     };
-  
+
     return (
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add Employee</DialogTitle>
@@ -172,6 +226,15 @@ export default function EmployeeTable() {
               required
               value={role}
               onChange={handleRoleChange}
+            />
+                        <TextField
+              margin="dense"
+              label="UF ID"
+              type="text"
+              fullWidth
+              required
+              value={UFID}
+              onChange={handleUFIDChange}
             />
             <TextField
               margin="dense"
@@ -200,8 +263,8 @@ export default function EmployeeTable() {
       </Dialog>
     );
   }
-  
-return (
+
+  return (
     <Box>
       <Stack direction="row" spacing={2} alignItems="center">
         <Typography variant="h6">Employee Table</Typography>
@@ -224,13 +287,13 @@ return (
           variant="contained"
           color="primary"
           startIcon={<AddCircleIcon />}
-          onClick={handleClickOpen}
+          onClick={handleClickEmployeeOpen}
         >
           Add Employee
         </Button>
         <AddEmployeeDialog
-          open={open}
-          handleClose={handleClose}
+          open={employeeDialogOpen}
+          handleClose={handleClickEmployeeClose}
           handleSubmit={handleAddEmployee}
         />
       </Stack>
@@ -238,8 +301,7 @@ return (
         <Table aria-label="employee table">
           <TableHead>
             <TableRow>
-              <TableCell>Course</TableCell>
-              <TableCell>Instructor</TableCell>
+              <TableCell>UFID</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Role</TableCell>
               <TableCell>Action</TableCell>
@@ -250,21 +312,29 @@ return (
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.Course}
-                  </TableCell>
-                  <TableCell>{row.Instructor}</TableCell>
+      
+                  <TableCell>{row.UFID}</TableCell>
                   <TableCell>{row.Name}</TableCell>
                   <TableCell>{row.Role}</TableCell>
                   <TableCell>
+             
                     <Button
                       variant="contained"
                       color="primary"
-                      startIcon={<EditIcon />}
-                      onClick={() => console.log(`Edit ${row.Name} clicked`)}
+                      startIcon={<AddCircleIcon />}
+                      onClick={handleClickOpen}
                     >
-                      Edit
+                      Contract
                     </Button>
+                    <HireEmployeeDialog
+                      open={open}
+                      courseUID={row.id}
+                      instructorUID = {instructorUID}
+
+                      row={row}
+                      handleClose={handleClose}
+                      courses={courses} // add this line to pass in the list of courses
+                    />
                     <Divider orientation="vertical" flexItem />
                     <Button
                       variant="contained"
@@ -294,4 +364,4 @@ return (
 
 }
 
- 
+

@@ -20,9 +20,30 @@ import {
 
  function  PopupTable(props) {
   useEffect(() => {
-    getInstructorCourseEmployeeList()},
+    getInstructorCourseEmployeeList();
+},
      []);
 
+     const {courseUID,instructorUID } = props;
+     const [employees, setEmployees] = useState([]);
+
+
+
+     const getInstructorCourseEmployeeList = async () => {
+
+      const InstructorCourseCollection = collection(db, `Instructor/${instructorUID}/Courses/${courseUID}/Employees`)
+      const data = await getDocs(InstructorCourseCollection);
+      data.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+      });    
+      setEmployees(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      
+      console.log("EMPLOYEEE LIST", employees)
+   
+      
+    }
+  
 
 
     let useStyles = makeStyles({
@@ -42,45 +63,31 @@ import {
       });
 
 
-      const [employees, setEmployees] = useState([]);
   
 
-      const getInstructorCourseEmployeeList = async () => {
 
-        console.log(props.instructorUID, "popup");
-     
-        const InstructorCourseEmployeeCollection = collection(db, `Instructor/${props.instructorUID}/Courses/${props.courseUID}/Employees`)
-        const data = await getDocs(InstructorCourseEmployeeCollection);
-        data.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
-        });    
-        setEmployees(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     
-     
-        
-      }
-    
-    
-      
+
       const classes = useStyles();
 return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="popup courses table">
         <TableHead>
           <TableRow>
-            <TableCell>Course Name</TableCell>
-            <TableCell align="right">Course Code</TableCell>
-            <TableCell align="right">Credits</TableCell>
+            <TableCell>UF ID</TableCell>
+            <TableCell align="right">Employee Name</TableCell>
+            <TableCell align="right">Employee Role</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {employees.map((employee) => ( 
             <TableRow key={props.courseUID}>
               <TableCell component="th" scope="row">
-                {employee.Name}
+                {employee.UFID}
               </TableCell>
               <TableCell align="right">{employee.Name}</TableCell>
+              <TableCell align="right">{employee.Role}</TableCell>
+
             </TableRow>
           ))} 
         </TableBody>

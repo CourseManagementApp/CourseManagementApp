@@ -15,6 +15,8 @@ import {
 import PopupTable from "./PopupTable";
 import Widget from "../../../../components/Widget/Widget";
 import DeleteIcon from "@mui/icons-material/Delete"
+import Swal from "sweetalert2";
+
 
 
 const useStyles = makeStyles({
@@ -30,6 +32,9 @@ const useStyles = makeStyles({
 
 });
 
+
+
+
 function CourseTable(props) {
   const [open, setOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -38,10 +43,36 @@ function CourseTable(props) {
   const empCollectionRef = collection(db, "Courses");
 
 
+
   useEffect(() => {
     console.log(props.courseList);
 }, []);
 
+
+
+const deleteUser = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.value) {
+      deleteApi(id);
+    }
+  });
+};
+
+const deleteApi = async (id) => {
+  const userDoc = doc(db, `Instructor/${props.instructorUID}/Courses`, id);
+
+  await deleteDoc(userDoc);
+  Swal.fire("Deleted!", "Your file has been deleted.", "success");
+  props.getInstructorCourseList()
+};
 
 
   const classes = useStyles();
@@ -57,6 +88,9 @@ function CourseTable(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+
+
 
 
 
@@ -86,7 +120,12 @@ function CourseTable(props) {
                   <Button variant="contained" color="primary" onClick={() => handleButtonClick(course)}>
                     Employee List
                   </Button>
+
+                  <Button variant="contained" color="secondary" startIcon={<DeleteIcon />} onClick={() => deleteUser(course.id)}>
+                    Delete
+                  </Button>
                 </TableCell>
+         
               </TableRow>
             ))}
           </TableBody>
