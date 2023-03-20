@@ -8,7 +8,7 @@ import PageTitle from "../../components/PageTitle";
 import Widget from "../../components/Widget";
 import Table from "../dashboard/components/Table/CourseTable";
 import CreateTable from "../dashboard/CreateTable";
-
+import EmployeeTable from "../dashboard/components/Table/EmployeeTable";
 // data
 import mock from "../dashboard/mock";
 
@@ -47,14 +47,10 @@ export default function Tables() {
       <PageTitle title="Tables" />
       <Grid container spacing={4}>
         <Grid item xs={12}>
-          <MUIDataTable
-            title="Employee List"
-            data={datatableData}
-            columns={ ["Name", "Course", "Year", "Dept", "ID"]}
-            options={{
-              filterType: "checkbox",
-            }}
-          />
+        <Widget title="Employee List" upperTitle noBodyPadding bodyClass={classes.tableOverflow}>
+
+          <EmployeeTable/>
+          </Widget>
         </Grid>
         <Grid item xs={12}>
           <Widget title="Course List" upperTitle noBodyPadding bodyClass={classes.tableOverflow}>
