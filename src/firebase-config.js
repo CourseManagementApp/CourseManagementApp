@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 //adding authentication to our project 
 import {getAuth} from 'firebase/auth'
+import {getFirestore} from 'firebase/firestore'
+import { collection } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBcjYJKjxy4w51Lw46JXo20to-JwN48rR8",
@@ -14,4 +16,6 @@ const firebaseConfig = {
 //initializes the connection between firebase and our app 
   const app = initializeApp(firebaseConfig);
   //exporting so the variable can be used in different files 
+ export  const db = getFirestore()
+
   export const auth = getAuth(app)
