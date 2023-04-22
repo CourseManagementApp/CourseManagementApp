@@ -1,13 +1,26 @@
 import { BellFilled, MailOutlined } from "@ant-design/icons";
-import { Badge, Drawer, Image, List, Space, Typography } from "antd";
+import { Badge, Drawer, List, Space, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { getComments, getOrders } from "../../API";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  title: {
+    color: "#0D3B56",
+    fontSize: "2rem",
+    fontWeight: 600,
+    textTransform: "uppercase",
+    letterSpacing: "2px",
+  },
+});
 
 function AppHeader() {
   const [comments, setComments] = useState([]);
   const [orders, setOrders] = useState([]);
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+
+  const classes = useStyles();
 
   useEffect(() => {
     getComments().then((res) => {
@@ -20,11 +33,13 @@ function AppHeader() {
 
   return (
     <div className="AppHeader">
-      {/* <Image
-        width={40}
-        src="https://yt3.ggpht.com/ytc/AMLnZu83ghQ28n1SqADR-RbI2BGYTrqqThAtJbfv9jcq=s176-c-k-c0x00ffffff-no-rj"
-      ></Image> */}
-      <Typography.Title>ECE Dashboard</Typography.Title>
+       <img
+        width={100}
+        src="https://www.ece.ufl.edu/wp-content/uploads/pub/identity/HW_ECE.png"
+      ></img> 
+      <Typography.Title className={classes.title}>
+        Course Management
+      </Typography.Title>
       <Space>
         <Badge count={comments.length} dot>
           <MailOutlined
@@ -81,4 +96,5 @@ function AppHeader() {
     </div>
   );
 }
+
 export default AppHeader;

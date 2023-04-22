@@ -2,7 +2,7 @@ import { Avatar, Rate, Space, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { getCustomers, getInventory } from "../../API";
 
-function Employee() {
+function Settings() {
   const [loading, setLoading] = useState(false);
   const [dataSource, setDataSource] = useState([]);
 
@@ -16,9 +16,9 @@ function Employee() {
 
   return (
     <Space size={20} direction="vertical">
-      <Typography.Title level={4}>Customers</Typography.Title>
+      <Typography.Title level={4}>Settngs</Typography.Title>
      
     </Space>
   );
 }
-export default Employee;
+export default Settings;
