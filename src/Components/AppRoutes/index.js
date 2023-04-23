@@ -4,6 +4,7 @@ import Dashboard from "../../Pages/Dashbaord";
 import Courses from "../../Pages/Courses";
 import Settings from "../../Pages/Settings";
 import Database from "../../Pages/Database";
+import TaRegistrationForm from "../Authentication/Registration/RegistrationFormTA";
 
 function AppRoutes() {
   return (
@@ -12,6 +13,7 @@ function AppRoutes() {
       <Route path="/Courses" element={<Courses />}></Route>
       <Route path="/Database" element={<Database />}></Route>
       <Route path="/Settings" element={<Settings />}></Route>
+      <Route path="/TA-registration" element ={<TaRegistrationForm />}></Route>
     </Routes>
   );
 }

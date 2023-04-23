@@ -22,12 +22,10 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
+    "react-double-scrollbar": "^0.0.15",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
-<<<<<<< Updated upstream
-=======
     "sweetalert2": "^11.7.3",
->>>>>>> Stashed changes
     "web-vitals": "^2.1.4",
     "yarn": "^1.22.19"
   },

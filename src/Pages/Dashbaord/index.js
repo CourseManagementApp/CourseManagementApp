@@ -56,7 +56,7 @@ function Dashboard() {
         </DialogActions>
       </Dialog>
     </Box>
-    <CourseTable/>
+    {/* <CourseTable/> */}
     </div>
   );
 }

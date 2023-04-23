@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Table,
   TableBody,
@@ -11,6 +11,8 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { db } from '../../firebase/firebase';
+import { collection, getDocs } from 'firebase/firestore';
+
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -20,11 +22,28 @@ const useStyles = makeStyles({
 function TaRequestTable() {
   const classes = useStyles();
 
-  const [requests, setRequests] = useState([
-    { id: 1, name: 'John Doe', email: 'john.doe@example.com', course: 'Introduction to React' },
-    { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com', course: 'Intermediate React' },
-    { id: 3, name: 'Bob Smith', email: 'bob.smith@example.com', course: 'Advanced React' },
-  ]);
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    const fetchRequests = async () => {
+      const querySnapshot = await getDocs(collection(db, 'applications'));
+      const requestsData = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const request = {
+          id: doc.id,
+          name: data.firstName + ' ' + data.lastName,
+          email: data.email,
+          course: data.selectedCourse,
+          status: data.status,
+        };
+        requestsData.push(request);
+      });
+      setRequests(requestsData);
+    };
+
+    fetchRequests();
+  }, []);
 
   const handleAction = (id, action) => {
     setRequests(requests.map((request) => {
