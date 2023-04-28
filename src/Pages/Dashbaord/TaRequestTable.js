@@ -10,7 +10,7 @@ import {
   Button,
   makeStyles,
 } from '@material-ui/core';
-import { db } from '../../firebase/firebase';
+import { db } from '../../Components/Firebase/firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
 
 const useStyles = makeStyles({

@@ -1,3 +1,5 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { useEffect, useState, useContext } from "react";
 import {
   Grid,
@@ -38,7 +40,7 @@ import {
   doc,
   query, collectionGroup, where
 } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
+import { db } from '../../Components/Firebase/firebaseConfig';
 import Swal from "sweetalert2";
 import TextField from "@mui/material/TextField";
 import AddCircleIcon from "@mui/icons-material/AddCircle";

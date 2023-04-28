@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from "@material-ui/core";
-import { db } from "../../firebase/firebase";
+import { db } from "../../Components/Firebase/firebaseConfig";
 import {
   collection,
   getDocs,

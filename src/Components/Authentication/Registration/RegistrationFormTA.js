@@ -1,3 +1,5 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { useState } from "react";
 import {
   Button,
@@ -9,7 +11,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../../firebase/firebase";
+import { db } from '../../Firebase/firebaseConfig';
 
 const useStyles = makeStyles((theme) => ({
   container: {
