@@ -20,15 +20,14 @@ function App() {
       style ={{minHeight:"100vh"}}
       >
      <div className="w-100" style ={{maxWidth :"400px"}}>
-      <Router>
+      
         <AuthProvider>
           <Routes>
-            <Route path = "/signup" Component={Signup}/>
+            <Route path = "/signup" element={<Signup/>}/>
           </Routes>
 
         </AuthProvider>
-
-      </Router>
+        
     </div>
     </Container>
     
