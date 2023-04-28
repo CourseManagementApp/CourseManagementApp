@@ -9,6 +9,7 @@ import AppHeader from "./Components/AppHeader";
 import PageContent from "./Components/PageContent";
 import SideMenu from "./Components/SideMenu";
 import Signup from "./Components/Authentication/Signup";
+import Login from "./Components/Authentication/Login";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path = "/signup" element={<Signup/>}/>
+            <Route path ="/login" element={<Login/>}/>
           </Routes>
 
         </AuthProvider>
