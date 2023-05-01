@@ -84,12 +84,15 @@ function AuthenticationComponent() {
   return (
     <Container component="main" maxWidth="xs" className={classes.container}>
       <div>
+
         <Avatar className={classes.avatar}>
           <LockOutlined />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Register User
-        </Typography>
+        <h1>
+        APPLICATION TO BE A TA, UPI OR GRADER
+
+        </h1>        </Typography>
         <form className={classes.form}>
           <TextField
             variant="outlined"
@@ -189,3 +192,6 @@ function AuthenticationComponent() {
 
 export default AuthenticationComponent;
 
+// Add if graduating the next semester form/input
+
+// TODO: Replicate format https://www.ece.ufl.edu/academics/graduate/ta-application/

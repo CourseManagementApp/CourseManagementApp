@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css"
-import MaterialTable from 'material-table';
 import { ThemeProvider, createTheme } from '@mui/material';
 import {
   Dialog,
@@ -13,6 +12,7 @@ import {
 } from '@material-ui/core';
 import TaRequestTable from './TaRequestTable';
 import CourseTable from './CoursesTable';
+
 const useStyles = makeStyles((theme) => ({
   dialog: {
     '& .MuiDialog-paper': {
@@ -25,6 +25,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     padding: '1rem',
+  },
+  centerBox: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 }));
 
@@ -41,24 +45,32 @@ function Dashboard() {
     setOpen(false);
   };
 
-  return (
-    <div>
-    <Box>
-      <Box className={classes.buttonContainer}>
-        <Button variant="contained" onClick={handleOpen}>View TA Requests</Button>
+
+  
+
+  return (<>
+     <Box className={classes.centerBox}>
+      <Box>
+        <Box className={classes.buttonContainer}>
+          <Button variant="contained" onClick={handleOpen}>View TA Requests</Button>
+        </Box>
+        <Dialog open={open} onClose={handleClose} className={classes.dialog}>
+          <DialogTitle>TA Requests</DialogTitle>
+          <DialogContent>
+            <TaRequestTable />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Close</Button>
+          </DialogActions>
+        </Dialog>
       </Box>
-      <Dialog open={open} onClose={handleClose} className={classes.dialog}>
-        <DialogTitle>TA Requests</DialogTitle>
-        <DialogContent>
-          <TaRequestTable />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
-        </DialogActions>
-      </Dialog>
     </Box>
-    {/* <CourseTable/> */}
-    </div>
+    
+            <CourseTable/>  
+  
+  </>
+
+
   );
 }
 

@@ -1,5 +1,3 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
 import { useState } from "react";
 import {
   Button,
@@ -11,11 +9,13 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from '../../Firebase/firebaseConfig';
+import { firebase } from "../../Firebase/firebase";
 
+let db = firebase
 const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(8),
+    backgroundColor: "#F1F1F1", // Add this line to set background color
   },
   form: {
     width: "100%",
@@ -26,18 +26,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 function TaRegistrationForm() {
   const classes = useStyles();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [year, setYear] = useState("");
+  const [dept, setDept] = useState("");
+  const [degreeType, setDegreeType] = useState("");
+  const [succeedingSemester, setSucceedingSemester] = useState("");
+  const [courseGrades, setCourseGrades] = useState("");
   const [resume, setResume] = useState("");
   const [workExperience, setWorkExperience] = useState("");
   const [ufid, setUfid] = useState("");
   const [email, setEmail] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
   const [telephone, setTelephone] = useState("");
+
 
   const courses = ["Course1", "Course2", "Course3"];
 
@@ -64,21 +70,28 @@ function TaRegistrationForm() {
       setLastName("");
       setYear("");
       setResume("");
+      setDept("");
+      setDegreeType("");
       setWorkExperience("");
       setUfid("");
       setEmail("");
       setSelectedCourse("");
       setTelephone("");
+      ;
+
     } catch (error) {
       console.error("Error adding document: ", error);
     }
   };
 
   return (
+    <div className="center">
     <Container component="main" maxWidth="xs" className={classes.container}>
       <Typography component="h1" variant="h5">
-        TA Course Application
+      APPLICATION TO BE A TA, UPI OR GRADER
       </Typography>
+
+
       <form className={classes.form} onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -123,6 +136,53 @@ function TaRegistrationForm() {
               }}
             />
           </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              id="Dept"
+              label="Department Affiliation"
+              name="Department"
+              value={dept}
+              onChange={(event) => {
+                setDept(event.target.value);
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              id="succeeedingSemestser"
+              label="Next Semester, I will be"
+              name="Succeeding Semeter"
+              value={succeedingSemester}
+              onChange={(event) => {
+                setSucceedingSemester(event.target.value);
+              }}
+            />
+            
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              id="DegreeType"
+              label="Degree Type"
+              name="Degree Type"
+              value={degreeType}
+              onChange={(event) => {
+                setDegreeType(event.target.value);
+              }}
+            />
+          </Grid>
+
+
           <Grid item xs={12}>
             <TextField
               variant="outlined"
@@ -230,6 +290,7 @@ function TaRegistrationForm() {
     </Button>
   </form>
 </Container>
+</div>
 );
 }
 

@@ -1,40 +1,70 @@
+
+import { useLocation } from "react-router-dom";
 import { Space } from "antd";
-import React from "react"
-import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
-import {Container} from "react-bootstrap"
-import { AuthProvider } from "./Components/Authentication/AuthContext";
 import "./App.css";
 import AppFooter from "./Components/AppFooter";
 import AppHeader from "./Components/AppHeader";
 import PageContent from "./Components/PageContent";
 import SideMenu from "./Components/SideMenu";
-import Signup from "./Components/Authentication/Signup";
-import Login from "./Components/Authentication/Login";
+import Dashboard from "./Pages/Dashbaord";
+import Courses from "./Pages/Courses";
+import Settings from "./Pages/Settings";
+import Database from "./Pages/Database";
+import TaRegistrationForm from "./Components/Authentication/Registration/RegistrationFormTA";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./Components/Authentication/AuthContext";
+import React, { useMemo, useState, useEffect } from 'react';
+
+import { AuthDetails } from "./Components/Authentication/Registration/AuthDetails";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import AuthView from "./Components/Authentication/Registration/AuthView";
+
 
 function App() {
+  const location = useLocation();
+  const isAuth = location.pathname.includes("/Auth");
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+
+
+
   return (
-
-    
-
-   
-    <Container className="d-flex align-items-center justify-content-center"
-      style ={{minHeight:"100vh"}}
-      >
-     <div className="w-100" style ={{maxWidth :"400px"}}>
-      
-        <AuthProvider>
+    <div className="App">
+      <AppHeader />
+      <div className="SideMenuAndPageContent">
+        {!isAuth && <SideMenu />}
+        <div className="PageContent">
           <Routes>
-            <Route path = "/signup" element={<Signup/>}/>
-            <Route path ="/login" element={<Login/>}/>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/Courses" element={<Courses />} />
+            <Route path="/Database" element={<Database />} />
+            <Route path="/Settings" element={<Settings />} />
+            <Route path="/Auth/TA-registration" element={<TaRegistrationForm />} />
+            <Route path = "/Auth" element={<AuthView/>}/>
           </Routes>
-
-        </AuthProvider>
-        
+        </div>
+      </div>
+      <AppFooter />
     </div>
-    </Container>
-    
-    
-    
   );
 }
+
 export default App;

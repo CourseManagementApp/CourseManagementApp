@@ -1,57 +1,54 @@
-import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "./AuthContext"
-import { Link } from "react-router-dom"
-export default function Login() {
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const [error,setError] = useState()
-  const [loading,setLoading] = useState(false)
-  const { login} = useAuth()
+import { signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState } from "react";
+import { auth } from "../Firebase/firebase";
 
-  async function handleSubmit(e)
-  {
+const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    
-    e.preventDefault()
-    
-try {
-  setError("")
-  setLoading(true)
-  await login(emailRef.current.value, passwordRef.current.value)
-} catch {
-  setError("Failed to sign in ")
-}
+  const signIn = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log(userCredential);
 
-setLoading(false)
-}
+        auth.onAuthStateChanged((user) => {
+          if (user) {
+            // User is signed in, navigate to the protected route
+            window.location.href = "/";
+          } else {
+            // User is not signed in, navigate to the public route
+            window.location.href = "/auth";
+          }
+        });
 
-  
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
+ 
   return (
-    <>
-      <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Log in</h2>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
-            </Form.Group>
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
-            </Form.Group>
-            <Button disabled = {loading} className = "w-100" type ="submit">
-              Log in
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
-      <div className="w-100 text-center mt-2">
-        Need an account? <Link to ="/signup">Sign up </Link>
-      </div>
-    </>
-  )
-}
+    <div className="sign-in-container">
+      <form onSubmit={signIn}>
+        <h1>Log In to your Account</h1>
+        <input
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        ></input>
+        <input
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        ></input>
+        <button type="submit">Log In</button>
+      </form>
+    </div>
+  );
+};
 
+export default SignIn;

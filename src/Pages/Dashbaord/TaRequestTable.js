@@ -10,7 +10,7 @@ import {
   Button,
   makeStyles,
 } from '@material-ui/core';
-import { db } from '../../Components/Firebase/firebaseConfig';
+import { firebase } from "../../Components/Firebase/firebase"
 import { collection, getDocs } from 'firebase/firestore';
 
 const useStyles = makeStyles({
@@ -26,7 +26,7 @@ function TaRequestTable() {
 
   useEffect(() => {
     const fetchRequests = async () => {
-      const querySnapshot = await getDocs(collection(db, 'applications'));
+      const querySnapshot = await getDocs(collection(firebase, 'applications'));
       const requestsData = [];
       querySnapshot.forEach((doc) => {
         const data = doc.data();

@@ -21,14 +21,26 @@ const data = [
   },
 ];
 
+function removeSpacesInJsonKeys(json) {
+  const newJson = {};
+
+  Object.keys(json).forEach((key) => {
+    const newKey = key.replace(/\s/g, ""); // remove spaces from key
+    newJson[newKey] = json[key]; // add modified key-value pair to new object
+  });
+
+  return newJson;
+}
 
 let db = firebase;
 
-const CourseTable = () => {
 
 
+const DatabaseTable = () => {
+
+  
   useEffect(() => {
-    getInstructorCourseList("1234");
+    getDatabase();
 
   }, []);
 
@@ -38,7 +50,7 @@ const CourseTable = () => {
   const [instructorUID, setInstructurUID] = useState(false); // to manage the dialog state
   const [courseID, setCourseID] = useState(false); // to manage the dialog state
 
-  const getInstructorCourseList = async (instructorUid = "1234") => {
+  const getDatabase = async (instructorUid = "1234") => {
     const InstructorCollection = collection(db, "Instructor");
     const q = query(InstructorCollection, where("uid", "==", instructorUid));
   
@@ -46,10 +58,12 @@ const CourseTable = () => {
     
     console.log(querySnapshot.docs.at(0).id)
     setInstructurUID(querySnapshot.docs.at(0).id)
-    const InstructorCourseCollection = collection(db, `Instructor/${querySnapshot.docs.at(0).id}/Courses`)
-    const data = await getDocs(InstructorCourseCollection);
+    const ecedatabase = collection(db, `fall_2022_ECE`)
+    const data = await getDocs(ecedatabase);
+    
     data.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
+      const newKey = doc.id.replace(/\s/g, ""); // remove spaces from key
       console.log(doc.id, " => ", doc.data());
     });    
 
@@ -61,7 +75,30 @@ const CourseTable = () => {
   }
 
 
+  const cleanKeysInFirestoreDocData = async (docRef) => {
+    const docSnapshot = await getDoc(docRef);
+    const data = docSnapshot.data();
+  
+    const cleanedData = Object.fromEntries(
+      Object.entries(data).map(([key, value]) => [
+        key.replace(/\s+/g, ""), // remove all whitespace characters from key
+        value
+      ])
+    );
+  
+    await updateDoc(docRef, cleanedData);
+  }
+  
+  const cleanKeysInFirestoreCollection = async (collectionRef) => {
+    const data = await getDocs(collectionRef);
+    data.forEach((doc) => {
+      cleanKeysInFirestoreDocData(doc.ref);
+    });
+  };
+  
 
+  
+  
 
 
  
@@ -77,16 +114,16 @@ const CourseTable = () => {
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'CourseName',
+        accessorKey: 'Course Title',
         header: 'Course Title',
       },
       {
-        accessorKey: 'CourseNumber',
-        header: 'Professor Name',
+        accessorKey: 'Instructor',
+        header: 'Instructor',
       },
       {
-        accessorKey: 'Credits',
-        header: 'Course Number',
+        accessorKey: 'Course',
+        header: 'Course Code',
       },
     ],
     [],
@@ -117,18 +154,9 @@ const CourseTable = () => {
       renderTopToolbarCustomActions={({ table }) => (
         <Box sx={{ display: 'flex', gap: '1rem', p: '4px' }}>
             <h4>
-            Courses Table
+            ECE Table
           </h4>
-        
-          <Button
-            color="secondary"
-            onClick={() => {
-              alert('Add Course');
-            }}
-            variant="contained"
-          >
-            Add Course
-          </Button>
+       
         
         </Box>
       )}
@@ -143,4 +171,4 @@ const CourseTable = () => {
   );
 };
 
-export default CourseTable;
+export default DatabaseTable;
